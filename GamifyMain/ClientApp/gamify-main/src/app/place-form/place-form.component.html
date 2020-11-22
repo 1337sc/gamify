@@ -1,0 +1,26 @@
+<div class="form-group">
+  <label for="placeNameInput">Name</label>
+  <input
+    type="text"
+    [(ngModel)]="props.place.name"
+    class="form-control"
+    id="placeNameInput"
+  />
+</div>
+<div class="form-group">
+  <label>Place location:</label>
+  <agm-map
+    [latitude]="props.place.coordLat"
+    [longitude]="props.place.coordLon"
+    [zoom]="1"
+  >
+    <agm-marker
+      [latitude]="currentLat"
+      [longitude]="currentLong"
+      [label]="props.place.name"
+      [markerDraggable]="true"
+      [markerClickable]="false"
+      (dragEnd)="dragEnd($event)"
+    ></agm-marker>
+  </agm-map>
+</div>

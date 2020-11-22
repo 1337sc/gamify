@@ -1,0 +1,17 @@
+<div *ngIf="!gapiUser; else logged">
+  <button class="btn btn-primary" (click)="authenticate()">Log in</button>
+</div>
+<ng-template #logged>
+  <div class="nav-item">
+    <a
+      [routerLink]="['cabinet', gapiUser.getBasicProfile().getEmail()]"
+      routerLinkActive="active"
+      class="nav-item mr-3 mr-sm-0 btn btn-primary"
+    >
+      Cabinet
+    </a>
+    <button class="nav-item btn btn-secondary" (click)="logout()">
+      Log out
+    </button>
+  </div>
+</ng-template>

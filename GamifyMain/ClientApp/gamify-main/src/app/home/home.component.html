@@ -1,0 +1,14 @@
+<div *ngIf="loaded" class="container">
+  <h2 style="text-align: center">Places nearby</h2>
+  <agm-map [latitude]="currentLat" [longitude]="currentLong" [zoom]="13">
+    <ng-container *ngFor="let p of placesNearBy">
+      <agm-marker
+        [latitude]="p?.coordLat"
+        [longitude]="p?.coordLon"
+        [label]="p?.name"
+        [markerDraggable]="false"
+        [markerClickable]="true"
+      ></agm-marker>
+    </ng-container>
+  </agm-map>
+</div>

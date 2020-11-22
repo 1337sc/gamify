@@ -1,0 +1,32 @@
+<div *ngIf="loaded">
+  <p>Hello, {{ currentUser.name }}</p>
+  <div style="text-align: center"><h2>Your places</h2></div>
+  <div>
+    <a [routerLink]="'/create/' + currentUser.id" class="nav-link">Add</a>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let p of currentPlaces">
+        <ng-container *ngIf="p.id != maskedPlaceId">
+          <tr>
+            <td>{{ p?.name }}</td>
+            <td>
+              <a [routerLink]="['../../edit', p.id]" class="btn btn-sm btn-primary"
+                >Edit</a
+              >
+              <button (click)="delete(p.id)" class="btn btn-sm btn-danger">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
