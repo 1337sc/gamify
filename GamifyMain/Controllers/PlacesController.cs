@@ -70,6 +70,15 @@ namespace GamifyMain.Controllers
             return place;
         }
 
+        [HttpGet("{id}/games")]
+        public async Task<object> GetPlaceGames(int id)
+        {
+            return await (from g in _context.Games
+                          join gip in _context.GamesInPlaces on g.Id equals gip.GameId
+                          where gip.PlaceId == id
+                          select g).ToListAsync();
+        }
+
         // PUT: api/Places/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
