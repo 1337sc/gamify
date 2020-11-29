@@ -14,6 +14,7 @@ namespace GamifyMain.Models
         public DbSet<Genre> Genres { get; set; }
         public DbSet<GameInPlace> GamesInPlaces { get; set; }
         public DbSet<GameOfGenre> GamesOfGenres { get; set; }
+        public DbSet<UserWishedGame> UsersWishedGames { get; set; }
 
         public ApplicationContext() : base() { }
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
