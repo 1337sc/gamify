@@ -11,11 +11,11 @@ namespace GamifyMain.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserWishedGamesController : ControllerBase
+    public class UsersWishedGamesController : ControllerBase
     {
         private readonly ApplicationContext _context;
 
-        public UserWishedGamesController(ApplicationContext context)
+        public UsersWishedGamesController(ApplicationContext context)
         {
             _context = context;
         }
