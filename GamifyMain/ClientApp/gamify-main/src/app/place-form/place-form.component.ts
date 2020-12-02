@@ -25,7 +25,6 @@ export class PlaceFormComponent implements OnInit {
   }
 
   dragEnd($event: any){
-    console.log($event.latLng.lat());
     this.props.place.coordLat = $event.latLng.lat();
     this.props.place.coordLon = $event.latLng.lng();
   }

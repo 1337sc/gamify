@@ -44,19 +44,28 @@ namespace GamifyMain.Controllers
 
         // GET: api/Users/fromemail/123@example.com
         [HttpGet("fromemail/{email}")]
-        public async Task<object> GetUser(string email)
+        public async Task<object> GetUserByEmail(string email)
         {
             var emailDecoded = HttpUtility.UrlDecode(email);
             var userQuery = from u in _context.Users where u.Email == emailDecoded select u;
 
             var user = await userQuery.SingleOrDefaultAsync();
-            
+
             if (user == null)
             {
                 return NotFound();
             }
 
             return user;
+        }
+
+        [HttpGet("{id}/games")]
+        public async Task<object> GetUserWishlist(int id)
+        {
+            return await (from g in _context.Games
+                          join uwg in _context.UsersWishedGames on g.Id equals uwg.GameId 
+                          where uwg.UserId == id 
+                          select g).ToListAsync();
         }
 
         // PUT: api/Users/5

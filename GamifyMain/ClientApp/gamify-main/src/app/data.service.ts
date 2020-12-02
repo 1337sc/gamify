@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Game } from './game';
 import { Place } from './place';
 import { User } from './user';
 
@@ -68,6 +69,17 @@ export class DataService {
   public getPlacesByOwnerId(id: number) {
     return this.http.get<Place[]>(
       `${this.placesUrl}/owner/${id}`,
+      this.options
+    );
+  }
+
+  getPlaceGames(id: number) {
+    return this.http.get<Game[]>(`${this.placesUrl}/${id}/games`, this.options);
+  }
+
+  public getPlacesByName(name: string) {
+    return this.http.get<Place[]>(
+      `${this.placesUrl}/search/${name}`,
       this.options
     );
   }
