@@ -94,4 +94,8 @@ export class DataService {
   public deletePlace(id: number) {
     return this.http.delete<Place>(`${this.placesUrl}/${id}`, this.options);
   }
+
+  public saveUserBio(user: User){
+    return this.http.post(`${this.usersUrl}/${id}`, this.options);
+  }
 }

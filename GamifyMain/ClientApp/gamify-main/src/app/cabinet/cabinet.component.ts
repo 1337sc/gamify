@@ -4,18 +4,23 @@ import { DataService } from '../data.service';
 import { Place } from '../place';
 import { User } from '../user';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-cabinet',
   templateUrl: './cabinet.component.html',
   styleUrls: ['./cabinet.component.scss'],
 })
+
 export class CabinetComponent implements OnInit {
   currentUser: User;
   currentPlaces: Place[];
   loaded = false;
   deletePlaceFlag = true;
   maskedPlaceId = -1;
+
+  imgUrl = 'https://lh3.googleusercontent.com/proxy/82kvhcVta6cEaJKhFZeGWU2moDO-037Gc0ctD57O3t1ZH6mhIzo5enqYb9rc2L53_ULNay6Cl7qFiEcOu9tTHcJOe43kMSYUmB-OdyjC9tzFzsQtBUkwyN7eat-D'
 
   constructor(
     private dataService: DataService,
@@ -62,4 +67,7 @@ export class CabinetComponent implements OnInit {
         }
       });
   }
+
 }
+
+
