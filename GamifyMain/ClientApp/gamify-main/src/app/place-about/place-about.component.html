@@ -1,0 +1,12 @@
+<div *ngIf="loaded">
+  <h2 style="text-align: center">{{ currentPlace.name }}</h2>
+  <p style="white-space: pre-wrap">{{ currentPlace.description }}</p>
+  <h2 style="text-align: center">Games served here:</h2>
+  <table class="table table-striped">
+    <tbody>
+      <tr *ngFor="let g of offeredGames">
+        <td>{{ g.name }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

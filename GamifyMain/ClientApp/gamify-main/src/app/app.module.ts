@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
 import { Routes, RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -13,13 +16,15 @@ import { CabinetComponent } from './cabinet/cabinet.component';
 import { PlaceCreateComponent } from './place-create/place-create.component';
 import { PlaceEditComponent } from './place-edit/place-edit.component';
 import { PlaceFormComponent } from './place-form/place-form.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SearchComponent } from './search/search.component';
+import { PlaceAboutComponent } from './place-about/place-about.component';
 
 const appRoutes: Routes = [
-  { path: 'cabinet/:email', component: CabinetComponent },
+  { path: 'cabinet', component: CabinetComponent },
   { path: 'create/:id', component: PlaceCreateComponent },
   { path: 'edit/:id', component: PlaceEditComponent },
+  { path: 'search', component: SearchComponent },
+  { path: 'placeAbout/:id', component: PlaceAboutComponent },
   { path: '', component: HomeComponent },
   { path: '**', redirectTo: '/' },
 ];
@@ -34,8 +39,11 @@ const appRoutes: Routes = [
     PlaceCreateComponent,
     PlaceEditComponent,
     PlaceFormComponent,
+    SearchComponent,
+    PlaceAboutComponent,
   ],
   imports: [
+    MDBBootstrapModule.forRoot(),
     MatSnackBarModule,
     BrowserModule,
     FormsModule,

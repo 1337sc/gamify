@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
 import { Place } from '../place';
 import { User } from '../user';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Game } from '../game';
 
 @Component({
   selector: 'app-cabinet',
@@ -13,18 +14,23 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class CabinetComponent implements OnInit {
   currentUser: User;
   currentPlaces: Place[];
+  currentWishList: Game[];
   loaded = false;
   deletePlaceFlag = true;
   maskedPlaceId = -1;
 
   constructor(
     private dataService: DataService,
-    private activeRoute: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.refreshPlacesTable();
+    this.dataService
+      .getUser(Number.parseInt(localStorage.getItem('curUser')))
+      .subscribe((response) => {
+        this.currentUser = response.body;
+        this.refreshPlacesTable();
+      });
   }
 
   delete(placeId: number) {
@@ -48,18 +54,10 @@ export class CabinetComponent implements OnInit {
   refreshPlacesTable(): void {
     this.loaded = false;
     this.dataService
-      .getUserByEmail(this.activeRoute.snapshot.params['email'])
-      .toPromise()
-      .then((response) => {
-        if (response.status != 404) {
-          this.currentUser = response.body;
-          this.dataService
-            .getPlacesByOwnerId(this.currentUser.id)
-            .subscribe((response) => {
-              this.currentPlaces = response.body;
-              this.loaded = true;
-            });
-        }
+      .getPlacesByOwnerId(this.currentUser.id)
+      .subscribe((response) => {
+        this.currentPlaces = response.body;
+        this.loaded = true;
       });
   }
 }

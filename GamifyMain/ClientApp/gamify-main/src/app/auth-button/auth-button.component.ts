@@ -4,6 +4,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
+import { User } from '../user';
 
 declare var gapi: any;
 
@@ -66,13 +67,26 @@ export class AuthButtonComponent implements OnInit {
           var gapiUserName = this.gapiUser.getBasicProfile().getName();
 
           this.dataService.getUserByEmail(gapiUserEmail).subscribe(
-            () => {},
+            (response) => {
+              console.log('Got from db ' + response.body.id.toString());
+              localStorage.setItem('curUser', response.body.id.toString());
+              console.log(localStorage.getItem('curUser'));
+            },
             (err) => {
+              console.log(err.status);
               if (err.status == 404) {
-                this.dataService.createUser({
-                  email: gapiUserEmail,
-                  name: gapiUserName,
-                });
+                this.dataService
+                  .createUser({
+                    email: gapiUserEmail,
+                    name: gapiUserName,
+                  })
+                  .subscribe((response) => {
+                    console.log('Created new ' + response.body.id.toString());
+                    localStorage.setItem(
+                      'curUser',
+                      response.body.id.toString()
+                    );
+                  });
               }
             }
           );
@@ -83,7 +97,8 @@ export class AuthButtonComponent implements OnInit {
   async logout() {
     this.authInstance.signOut();
     this.gapiUser = null;
-    this.router.navigateByUrl("/");
+    localStorage.clear();
+    this.router.navigateByUrl('/');
   }
 
   async checkIfUserAuthenticated(): Promise<boolean> {

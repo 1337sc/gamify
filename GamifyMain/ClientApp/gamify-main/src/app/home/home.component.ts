@@ -24,7 +24,9 @@ export class HomeComponent implements OnInit {
       this.dataService
         .getPlacesInRadius(searchRadius, this.currentLat, this.currentLong)
         .subscribe((response) => {
-          this.placesNearBy = response.body;
+          if (response.status != 404) {
+            this.placesNearBy = response.body;
+          }
           this.loaded = true;
         });
     });
