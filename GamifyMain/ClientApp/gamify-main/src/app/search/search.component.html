@@ -1,0 +1,23 @@
+<form class="form-inline md-form form-sm">
+  <mdb-icon fas icon="search" aria-hidden="true"></mdb-icon>
+  <input
+    id="searchInput"
+    class="form-control form-control-sm ml-3 w-75"
+    type="text"
+    placeholder="Search"
+    aria-label="Search"
+    mdbInput
+  />
+</form>
+<div id="searchResults">
+  <div class="card" style="width: 18rem" *ngFor="let e of elements">
+    <div class="card-body">
+      <h5 class="card-title">{{ e.name }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{ category }}</h6>
+      <p class="card-text">
+        {{ e.description }}
+      </p>
+      <a [routerLink]="['/placeAbout/', e.id]" class="card-link">More</a>
+    </div>
+  </div>
+</div>

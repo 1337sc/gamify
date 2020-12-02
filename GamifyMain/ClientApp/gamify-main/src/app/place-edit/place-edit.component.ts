@@ -32,12 +32,8 @@ export class PlaceEditComponent implements OnInit {
   }
 
   save() {
-    var userEmail: string;
-    this.dataService
-      .getUser(this.editedPlace.ownerId)
-      .subscribe((response) => (userEmail = response.body.email));
     this.dataService
       .updatePlace(this.editedPlace)
-      .subscribe(() => this.router.navigateByUrl('/cabinet/' + userEmail));
+      .subscribe(() => this.router.navigateByUrl('/cabinet'));
   }
 }

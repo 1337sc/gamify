@@ -10,7 +10,7 @@ import { Place } from '../place';
   styleUrls: ['./place-create.component.scss'],
 })
 export class PlaceCreateComponent implements OnInit {
-  createdPlace = new Place(0, '', 0.1, 0.1, 0);
+  createdPlace = new Place(0, '', '', 0.1, 0.1, 0);
   formProps: any;
   loaded = false;
 
@@ -30,12 +30,8 @@ export class PlaceCreateComponent implements OnInit {
   }
 
   save() {
-    var userEmail: string;
-    this.dataService
-      .getUser(this.createdPlace.ownerId)
-      .subscribe((response) => (userEmail = response.body.email));
     this.dataService
       .createPlace(this.createdPlace)
-      .subscribe(() => this.router.navigateByUrl('/cabinet/' + userEmail));
+      .subscribe(() => this.router.navigateByUrl('/cabinet'));
   }
 }

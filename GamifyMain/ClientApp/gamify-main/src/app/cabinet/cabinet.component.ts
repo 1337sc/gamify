@@ -3,33 +3,34 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
 import { Place } from '../place';
 import { User } from '../user';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { HttpClient } from '@angular/common/http';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Game } from '../game';
 
 @Component({
   selector: 'app-cabinet',
   templateUrl: './cabinet.component.html',
   styleUrls: ['./cabinet.component.scss'],
 })
-
 export class CabinetComponent implements OnInit {
   currentUser: User;
   currentPlaces: Place[];
+  currentWishList: Game[];
   loaded = false;
   deletePlaceFlag = true;
   maskedPlaceId = -1;
 
-  imgUrl = 'https://lh3.googleusercontent.com/proxy/82kvhcVta6cEaJKhFZeGWU2moDO-037Gc0ctD57O3t1ZH6mhIzo5enqYb9rc2L53_ULNay6Cl7qFiEcOu9tTHcJOe43kMSYUmB-OdyjC9tzFzsQtBUkwyN7eat-D'
-
   constructor(
     private dataService: DataService,
-    private activeRoute: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.refreshPlacesTable();
+    this.dataService
+      .getUser(Number.parseInt(localStorage.getItem('curUser')))
+      .subscribe((response) => {
+        this.currentUser = response.body;
+        this.refreshPlacesTable();
+      });
   }
 
   delete(placeId: number) {
@@ -53,21 +54,10 @@ export class CabinetComponent implements OnInit {
   refreshPlacesTable(): void {
     this.loaded = false;
     this.dataService
-      .getUserByEmail(this.activeRoute.snapshot.params['email'])
-      .toPromise()
-      .then((response) => {
-        if (response.status != 404) {
-          this.currentUser = response.body;
-          this.dataService
-            .getPlacesByOwnerId(this.currentUser.id)
-            .subscribe((response) => {
-              this.currentPlaces = response.body;
-              this.loaded = true;
-            });
-        }
+      .getPlacesByOwnerId(this.currentUser.id)
+      .subscribe((response) => {
+        this.currentPlaces = response.body;
+        this.loaded = true;
       });
   }
-
 }
-
-
