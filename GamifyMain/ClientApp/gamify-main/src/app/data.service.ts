@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Game } from './game';
 import { Place } from './place';
 import { User } from './user';
+import { UserWishedGame } from './uwg'
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,7 @@ import { User } from './user';
 export class DataService {
   private usersUrl = '/api/users';
   private placesUrl = '/api/places';
+  private userWG = 'api/userwishedgames';
 
   private options = {
     observe: 'response' as const,
@@ -107,7 +109,7 @@ export class DataService {
     return this.http.delete<Place>(`${this.placesUrl}/${id}`, this.options);
   }
 
-  public saveUserBio(user: User){
-    return this.http.post(`${this.usersUrl}/${id}`, this.options);
+  createUserWishedGame(uwg: UserWishedGame){
+    return this.http.post<UserWishedGame>(this.usersUrl, uwg, this.options)
   }
 }

@@ -1,35 +1,64 @@
 <div *ngIf="loaded">
   <div class="container-fluid mb-5">
-  <h2>Hello, {{ currentUser.name }} <img src='{{ imgUrl }}' width="60" height="50"></h2>  
-  <form #userForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+    <h2>Hello, {{ currentUser.name }} <img src='{{ imgUrl }}' width="60" height="50"></h2>  
+    
+    <form #userForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
 
-    {{ userForm.value | json }}
 
-    <div class="form-group">
-      <label>City</label>
-      <input type="text" [(ngModel)]="user.city" class="form-control"  >
-    </div>
-    <div class="form-group">
-      <label>Phone</label>
-      <input type="tel" [(ngModel)]="user.phone" class="form-control">
-    </div>
-  </form>
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" [(ngModel)]="user.city" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" [(ngModel)]="user.phone" class="form-control">
+      </div>
+    </form>
 
-  <div class='mb-3'>
-    <label>I am:</label>
-    <div class='form-check'>
-      <input class="form-check-input" ngModel type='radio' name="aboutPerson" value="silentPerson">
-      <label class="form-check-label">a quiet person</label>
+    <div class='mb-3'>
+      <label>I am:</label>
+      <div class='form-check'>
+        <input class="form-check-input" ngModel type='radio' name="aboutPerson" value="silentPerson">
+        <label class="form-check-label">a quiet person</label>
+      </div>
+      <div class='form-check'>
+        <input class="form-check-input" ngModel type='radio' name="aboutPerson" value="noisyPerson">
+        <label class="form-check-label">an empulsive person</label>
+      </div>
     </div>
-    <div class='form-check'>
-      <input class="form-check-input" ngModel type='radio' name="aboutPerson" value="noisyPerson">
-      <label class="form-check-label">an empulsive person</label>
-    </div>
+
+    <input type="button" value="Submit" (click)="save()" class="btn btn-success" />
   </div>
 
-  <input type="button" value="Submit" (click)="save()" class="btn btn-success" />
 
-  </div>
+      <hr>
+        <h2 style="text-align: center">Games Whish List</h2>
+
+        <form>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Game Name: </label>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Game Name" [(ngModel)]="uwg.GameName">
+          </div>
+          <div class="form-row align-items-center">
+            <div class="form-group">
+              <label class="mr-sm-2" for="inlineFormCustomSelect">Genre: </label>
+              <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                <option selected>Choose...</option>
+                <option value="1">Shooter</option>
+                <option value="2">Sport</option>
+                <option value="3">Racing</option>
+                <option value="3">Fighting</option>
+                <option value="3">Horror</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Description: </label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="uwg.Description"></textarea>
+          </div>
+          <input type="button" value="Submit" (click)="save()" class="btn btn-success" />
+        </form>
+  
 
   <div style="text-align: center"><h2>Your places</h2></div>
   <div>

@@ -5,6 +5,9 @@ import { Place } from '../place';
 import { User } from '../user';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '../game';
+import { UserWishedGame } from '../uwg'
+import { HttpResponse } from '@angular/common/http';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-cabinet',
@@ -18,11 +21,14 @@ export class CabinetComponent implements OnInit {
   loaded = false;
   deletePlaceFlag = true;
   maskedPlaceId = -1;
+  tableMode: boolean = true;   
+  uwg : UserWishedGame = new UserWishedGame(); 
 
   constructor(
     private dataService: DataService,
     private snackBar: MatSnackBar
   ) {}
+
 
   ngOnInit(): void {
     this.dataService
@@ -60,4 +66,14 @@ export class CabinetComponent implements OnInit {
         this.loaded = true;
       });
   }
+
+  save(){
+    this.dataService.createUserWishedGame(this.uwg)
+    .subscribe((response) => this.uwg = response.body)
+    this.cancel();
+}
+cancel() {
+  this.uwg = new UserWishedGame();
+  this.tableMode = true;
+}
 }
