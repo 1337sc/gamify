@@ -30,11 +30,13 @@
   <a [routerLink]="'/addComment/' + currentPlace.id" class="nav-link">Add</a>
   <table class="table table-striped">
     <tbody>
-      <tr>
-        <td>
-          <app-comment></app-comment>
-        </td>
-      </tr>
+      <ng-container *ngFor="let c of curPlaceComments; let i = index">
+        <tr>
+          <td>
+            <app-comment [(comment)]="curPlaceComments[i]"></app-comment>
+          </td>
+        </tr>
+      </ng-container>
     </tbody>
   </table>
 </div>

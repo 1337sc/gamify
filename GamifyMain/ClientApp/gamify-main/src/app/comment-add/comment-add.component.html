@@ -1,0 +1,15 @@
+<div class="form-group">
+    <label for="placeDescInput">Description</label>
+    <textarea
+      [(ngModel)]="currentText"
+      class="form-control"
+      rows="10"
+      cols="40"
+      id="placeDescInput"
+    ></textarea>
+  </div>
+  <div class="form-group">
+    <input type="button" value="Save" (click)="save()" class="btn btn-success" />
+    <a [routerLink]="'/placeAbout/' + this.currentPlaceId" class="btn btn-warning">Cancel</a>
+  </div>
+  

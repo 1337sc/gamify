@@ -6,6 +6,7 @@ import { Genre } from './genre';
 import { UserGames } from './models/UserGames';
 import { Place } from './place';
 import { User } from './user';
+import { Comment } from './comment';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class DataService {
   private gamesInPlacesUrl = '/api/gamesInPlaces';
   private gamesOfGenresUrl = 'api/gamesOfGenres';
   private usersWishedGamesUrl = '/api/usersWishedGames';
+  private commentsUrl = '/api/comments';
 
   private options = {
     observe: 'response' as const,
@@ -113,6 +115,13 @@ export class DataService {
     );
   }
 
+  public getPlaceComments(id: number) {
+    return this.http.get<Comment[]>(
+      `${this.placesUrl}/${id}/comments`,
+      this.options
+    );
+  }
+
   public createPlace(place: Place) {
     return this.http.post<Place>(this.placesUrl, place, this.options);
   }
@@ -197,5 +206,13 @@ export class DataService {
 
   createWishedGame(wishedGame: { gameId: number; userId: number }) {
     return this.http.post(this.usersWishedGamesUrl, wishedGame, this.options);
+  }
+
+  createComment(comment: Comment) {
+    return this.http.post<Comment>(this.commentsUrl, comment, this.options);
+  }
+
+  createCommentForPlace(commentId: number, placeId: number){
+    return this.http.post("api/commentsforplaces", {placeId: placeId, commentId: commentId}, this.options);
   }
 }

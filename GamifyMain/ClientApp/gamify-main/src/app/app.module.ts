@@ -29,6 +29,7 @@ import { GameFormComponent } from './game-form/game-form.component';
 import { WishedGameCreateComponent } from './wished-game-create/wished-game-create.component';
 import { WishedGameEditComponent } from './wished-game-edit/wished-game-edit.component';
 import { CommentComponent } from './comment/comment.component';
+import { CommentAddComponent } from './comment-add/comment-add.component';
 
 const appRoutes: Routes = [
   { path: 'cabinet', component: CabinetComponent },
@@ -40,6 +41,7 @@ const appRoutes: Routes = [
   { path: 'editGame/:placeId/:gameId', component: GameEditComponent },
   { path: 'search', component: SearchComponent },
   { path: 'placeAbout/:id', component: PlaceAboutComponent },
+  { path: 'addComment/:id', component: CommentAddComponent },
   { path: '', component: HomeComponent },
   { path: '**', redirectTo: '/' },
 ];
@@ -62,6 +64,7 @@ const appRoutes: Routes = [
     WishedGameCreateComponent,
     WishedGameEditComponent,
     CommentComponent,
+    CommentAddComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
