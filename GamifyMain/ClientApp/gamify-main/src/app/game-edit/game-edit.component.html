@@ -1,0 +1,14 @@
+<ng-container *ngIf="loaded">
+  <app-game-form [(props)]="formProps"></app-game-form>
+  <div class="form-group">
+    <input
+      type="button"
+      value="Save"
+      (click)="save()"
+      class="btn btn-success"
+    />
+    <a [routerLink]="'/placeAbout/' + this.placeId" class="btn btn-warning"
+      >Cancel</a
+    >
+  </div>
+</ng-container>

@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace GamifyMain.Models
 {
-    public class Game
+    public class CommentForPlace
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public int PlaceId { get; set; }
+        public int CommentId { get; set; }
     }
 }

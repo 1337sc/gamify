@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
 import { Place } from '../place';
 import { User } from '../user';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '../game';
+
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cabinet',
@@ -18,6 +18,8 @@ export class CabinetComponent implements OnInit {
   loaded = false;
   deletePlaceFlag = true;
   maskedPlaceId = -1;
+  maskedGameId: number;
+  deleteGameFlag: any;
 
   constructor(
     private dataService: DataService,
@@ -29,7 +31,7 @@ export class CabinetComponent implements OnInit {
       .getUser(Number.parseInt(localStorage.getItem('curUser')))
       .subscribe((response) => {
         this.currentUser = response.body;
-        this.refreshPlacesTable();
+        this.refreshTable();
       });
   }
 
@@ -42,7 +44,7 @@ export class CabinetComponent implements OnInit {
       if (this.deletePlaceFlag) {
         this.dataService
           .deletePlace(placeId)
-          .subscribe(() => this.refreshPlacesTable());
+          .subscribe(() => this.refreshTable());
       }
     });
     snackBarRef.onAction().subscribe(() => {
@@ -51,13 +53,42 @@ export class CabinetComponent implements OnInit {
     });
   }
 
-  refreshPlacesTable(): void {
-    this.loaded = false;
-    this.dataService
-      .getPlacesByOwnerId(this.currentUser.id)
-      .subscribe((response) => {
-        this.currentPlaces = response.body;
-        this.loaded = true;
-      });
+  deleteWishedGame(gameId: number){
+    this.maskedGameId = gameId;
+    let snackBarRef = this.snackBar.open('The game has been deleted', 'Undo', {
+      duration: 2500,
+    });
+    snackBarRef.afterDismissed().subscribe(() => {
+      if (this.deleteGameFlag) {
+        this.dataService
+          .deleteGame(gameId)
+          .subscribe(() => this.refreshTable());
+      }
+    });
+    snackBarRef.onAction().subscribe(() => {
+      this.deleteGameFlag = false;
+      this.maskedGameId = -1;
+    });
+  }
+
+  refreshTable(): void {
+    if (this.currentUser.role == 'placeOwner') {
+      this.loaded = false;
+      this.dataService
+        .getPlacesByOwnerId(this.currentUser.id)
+        .subscribe((response) => {
+          this.currentPlaces = response.body;
+          this.loaded = true;
+        });
+    }
+    if (this.currentUser.role == 'user') {
+      this.loaded = false;
+      this.dataService
+        .getUserWishlist(this.currentUser.id)
+        .subscribe((response) => {
+          this.currentWishList = response.body;
+          this.loaded = true;
+        });
+    }
   }
 }

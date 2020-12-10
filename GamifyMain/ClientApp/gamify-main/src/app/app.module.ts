@@ -5,7 +5,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { AppComponent } from './app.component';
@@ -18,11 +23,21 @@ import { PlaceEditComponent } from './place-edit/place-edit.component';
 import { PlaceFormComponent } from './place-form/place-form.component';
 import { SearchComponent } from './search/search.component';
 import { PlaceAboutComponent } from './place-about/place-about.component';
+import { GameCreateComponent } from './game-create/game-create.component';
+import { GameEditComponent } from './game-edit/game-edit.component';
+import { GameFormComponent } from './game-form/game-form.component';
+import { WishedGameCreateComponent } from './wished-game-create/wished-game-create.component';
+import { WishedGameEditComponent } from './wished-game-edit/wished-game-edit.component';
+import { CommentComponent } from './comment/comment.component';
 
 const appRoutes: Routes = [
   { path: 'cabinet', component: CabinetComponent },
   { path: 'create/:id', component: PlaceCreateComponent },
   { path: 'edit/:id', component: PlaceEditComponent },
+  { path: 'createWishedGame/:id', component: WishedGameCreateComponent },
+  { path: 'editWishedGame/:id', component: WishedGameCreateComponent },
+  { path: 'createGame/:id', component: GameCreateComponent },
+  { path: 'editGame/:placeId/:gameId', component: GameEditComponent },
   { path: 'search', component: SearchComponent },
   { path: 'placeAbout/:id', component: PlaceAboutComponent },
   { path: '', component: HomeComponent },
@@ -41,10 +56,21 @@ const appRoutes: Routes = [
     PlaceFormComponent,
     SearchComponent,
     PlaceAboutComponent,
+    GameCreateComponent,
+    GameEditComponent,
+    GameFormComponent,
+    WishedGameCreateComponent,
+    WishedGameEditComponent,
+    CommentComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
+
     MatSnackBarModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatIconModule,
+
     BrowserModule,
     FormsModule,
     HttpClientModule,

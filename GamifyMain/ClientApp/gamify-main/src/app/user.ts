@@ -5,8 +5,6 @@ export class User {
       public description?: string,
       public name?: string,
       public role?: string,
-      public PhoneNumber?: string,
-      public City?: string,
     ) {}
   }
   

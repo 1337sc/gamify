@@ -87,6 +87,15 @@ namespace GamifyMain.Controllers
                           select p).ToListAsync();
         }
 
+        [HttpGet("{id}/comments")]
+        public async Task<object> GetPlaceComments(int id)
+        {
+            return await (from c in _context.Comments
+                          join cfp in _context.CommentsForPlaces on c.Id equals cfp.CommentId
+                          where cfp.PlaceId == id
+                          select c).ToListAsync();
+        }
+
         // PUT: api/Places/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

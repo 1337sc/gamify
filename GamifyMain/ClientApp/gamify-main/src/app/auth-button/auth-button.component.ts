@@ -68,20 +68,17 @@ export class AuthButtonComponent implements OnInit {
 
           this.dataService.getUserByEmail(gapiUserEmail).subscribe(
             (response) => {
-              console.log('Got from db ' + response.body.id.toString());
               localStorage.setItem('curUser', response.body.id.toString());
-              console.log(localStorage.getItem('curUser'));
             },
             (err) => {
-              console.log(err.status);
               if (err.status == 404) {
                 this.dataService
                   .createUser({
                     email: gapiUserEmail,
                     name: gapiUserName,
+                    role: 'user'
                   })
                   .subscribe((response) => {
-                    console.log('Created new ' + response.body.id.toString());
                     localStorage.setItem(
                       'curUser',
                       response.body.id.toString()

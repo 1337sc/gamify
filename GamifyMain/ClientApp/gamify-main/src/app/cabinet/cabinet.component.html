@@ -1,32 +1,67 @@
 <div *ngIf="loaded">
   <p>Hello, {{ currentUser.name }}</p>
-  <div style="text-align: center"><h2>Your places</h2></div>
-  <div>
-    <a [routerLink]="'/create/' + currentUser.id" class="nav-link">Add</a>
-  </div>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <td>Name</td>
-        <td></td>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let p of currentPlaces">
-        <ng-container *ngIf="p.id != maskedPlaceId">
-          <tr>
-            <td>{{ p?.name }}</td>
-            <td>
-              <a [routerLink]="['/edit', p.id]" class="btn btn-sm btn-primary"
-                >Edit</a
-              >
-              <button (click)="delete(p.id)" class="btn btn-sm btn-danger">
-                Delete
-              </button>
-            </td>
-          </tr>
+  <ng-container *ngIf="currentUser.role == 'placeOwner'">
+    <div style="text-align: center"><h2>Your places</h2></div>
+    <div>
+      <a [routerLink]="'/create/' + currentUser.id" class="nav-link">Add</a>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let p of currentPlaces">
+          <ng-container *ngIf="p.id != maskedPlaceId">
+            <tr>
+              <td>{{ p?.name }}</td>
+              <td>
+                <a [routerLink]="['/edit', p.id]" class="btn btn-sm btn-primary"
+                  >Edit</a
+                >
+                <button (click)="delete(p.id)" class="btn btn-sm btn-danger">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </ng-container>
         </ng-container>
-      </ng-container>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </ng-container>
+  <ng-container *ngIf="currentUser.role == 'user'">
+    <div style="text-align: center"><h2>Your wishlist</h2></div>
+    <div>
+      <a [routerLink]="'/createWishedGame/' + currentUser.id" class="nav-link"
+        >Add</a
+      >
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let g of currentWishList">
+          <ng-container *ngIf="g.id != maskedGameId">
+            <tr>
+              <td>{{ g?.name }}</td>
+              <td>
+                <a [routerLink]="['/editWishedGame', g.id]" class="btn btn-sm btn-primary"
+                  >Edit</a
+                >
+                <button (click)="deleteWishedGame(g.id)" class="btn btn-sm btn-danger">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+    </table>
+  </ng-container>
 </div>
