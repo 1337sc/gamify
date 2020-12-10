@@ -27,7 +27,7 @@
     </tbody>
   </table>
   <h2 style="text-align: center">Comments</h2>
-  <a [routerLink]="'/addComment/' + currentPlace.id" class="nav-link">Add</a>
+  <a [routerLink]="'/addComment/' + this.currentPlace.id" class="nav-link">Add</a>
   <table class="table table-striped">
     <tbody>
       <ng-container *ngFor="let c of curPlaceComments; let i = index">

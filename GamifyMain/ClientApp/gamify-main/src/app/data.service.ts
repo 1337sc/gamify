@@ -200,7 +200,15 @@ export class DataService {
     return this.http.post<Comment>(this.commentsUrl, comment, this.options);
   }
 
-  createCommentForPlace(commentId: number, placeId: number){
-    return this.http.post("api/commentsforplaces", {placeId: placeId, commentId: commentId}, this.options);
+  createCommentForPlace(commentId: number, placeId: number) {
+    return this.http.post(
+      'api/commentsforplaces',
+      { placeId: placeId, commentId: commentId },
+      this.options
+    );
+  }
+
+  updateComment(comment: Comment) {
+    return this.http.put(`${this.commentsUrl}/${comment.id}`, comment, this.options);
   }
 }

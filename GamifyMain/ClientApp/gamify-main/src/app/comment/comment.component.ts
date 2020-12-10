@@ -11,6 +11,7 @@ import { Comment } from '../comment';
 export class CommentComponent implements OnInit {
   @Input() comment: Comment;
   author: User;
+  rating: string;
   loaded = false;
 
   constructor(private dataService: DataService) {}
@@ -20,5 +21,10 @@ export class CommentComponent implements OnInit {
       .getUser(this.comment.authorId)
       .subscribe((response) => (this.author = response.body));
     this.loaded = true;
+  }
+
+  setRating() {
+    this.comment.rating = Number.parseInt(this.rating);
+    this.dataService.updateComment(this.comment);
   }
 }
