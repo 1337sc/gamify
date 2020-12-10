@@ -9,6 +9,8 @@ import {
   tap,
 } from 'rxjs/operators';
 import { Place } from '../place';
+import { FormControl } from '@angular/forms';
+import { User } from '../user';
 
 @Component({
   selector: 'app-search',
@@ -17,28 +19,66 @@ import { Place } from '../place';
 })
 export class SearchComponent implements OnInit {
   category = 'place';
-  elements: Place[];
+  elements: Place[] | User[];
 
-  constructor(private dataService: DataService) {}
+  searchCtrl: FormControl = new FormControl('');
+  selectCtrl: FormControl = new FormControl(SearchType.Places);
+
+  searchTypeOptions = [{ text: 'Places', value: SearchType.Places }];
+
+  currentUser: User;
+
+  constructor(private dataService: DataService) {
+    if (localStorage.getItem('curUser')) {
+      this.searchTypeOptions.push({ text: 'User', value: SearchType.User });
+      this.selectCtrl.setValue(SearchType.User);
+    } else {
+      this.selectCtrl.disable();
+    }
+  }
+
+  get isFilterByUser() {
+    return this.selectCtrl.value == SearchType.User;
+  }
 
   ngOnInit(): void {
-    const search = document.getElementById('searchInput');
+    this.dataService
+      .getUser(Number.parseInt(localStorage.getItem('curUser')))
+      .subscribe((response) => {
+        this.currentUser = response.body;
+        this.reloadData();
+      });
 
-    fromEvent(search, 'input')
-      .pipe(
-        map((e) => (<HTMLInputElement>e.target).value),
-        debounceTime(1500),
-        distinctUntilChanged(),
-        filter(v => v.length != 0)
-      )
-      .subscribe((value) =>
+    this.searchCtrl.valueChanges
+      .pipe(distinctUntilChanged(), debounceTime(300))
+      .subscribe(() => this.reloadData());
+
+    this.selectCtrl.valueChanges.subscribe(() => this.reloadData());
+  }
+
+  reloadData() {
+    const value = (this.searchCtrl.value as string).toLowerCase();
+    this.elements = [];
+    switch (+this.selectCtrl.value) {
+      case SearchType.User:
+        this.dataService
+          .getUserWithGames(this.currentUser.id, value)
+          .subscribe((data) => (this.elements = data));
+        break;
+      case SearchType.Places:
         this.dataService
           .getPlacesByName(value)
-          .subscribe((response) => (this.elements = response.body))
-      );
+          .subscribe((r) => (this.elements = r.body));
+        break;
+    }
   }
 
   clearResults(): void {
-    document.getElementById('searchResults').innerHTML = '';
+    this.searchCtrl.setValue('');
   }
+}
+
+enum SearchType {
+  User = 1,
+  Places = 2,
 }

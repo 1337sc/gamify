@@ -1,7 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { Game } from './game';
 import { Genre } from './genre';
+import { UserGames } from './models/UserGames';
 import { Place } from './place';
 import { User } from './user';
 
@@ -23,8 +25,18 @@ export class DataService {
 
   constructor(private http: HttpClient) {}
 
-  public getUsers() {
-    return this.http.get<User[]>(this.usersUrl, this.options);
+  public getUsers(name?: string) {
+    const params = new HttpParams().set('name', name);
+
+    return this.http.get<User[]>(this.usersUrl, { params });
+  }
+
+  public getUserWithGames(userId: number, userName?: string) {
+    const params = new HttpParams()
+      .set('currentUserId', userId.toString())
+      .set('userName', userName);
+
+    return this.http.get<UserGames[]>(this.usersUrl + '/games', { params });
   }
 
   public getUser(id: number) {
@@ -33,7 +45,7 @@ export class DataService {
 
   getUserWishlist(id: number) {
     return this.http.get<Game[]>(`${this.usersUrl}/${id}/games`, this.options);
-  } 
+  }
 
   public getUserByEmail(email: string) {
     return this.http.get<User>(
