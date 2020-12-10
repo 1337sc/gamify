@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GamifyMain.Models;
 using System.Web;
+using GamifyMain.ViewModels;
 
 namespace GamifyMain.Controllers
 {
@@ -23,9 +24,44 @@ namespace GamifyMain.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<object> GetUsers()
+        public async Task<object> GetUsers(string name)
         {
-            return await _context.Users.ToListAsync();
+            var query = _context.Users.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                query = query.Where(user => user.Name.Contains(name));
+            }
+
+            return await query.ToListAsync();
+        }
+
+        [HttpGet("games")]
+        public async Task<object> GetUserWithGames(string userName, int currentUserId)
+        {
+            var query = _context.Users.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(userName))
+            {
+                query = query.Where(user => user.Name.Contains(userName));
+            }
+
+            var userGameIds = await _context.UsersWishedGames
+                .Where(g => g.UserId == currentUserId)
+                .Select(g => g.GameId)
+                .ToListAsync();
+
+            return await query
+                .Where(x => x.UserWishedGames.Any(g => userGameIds.Contains(g.GameId)))
+                .Include(x => x.UserWishedGames)
+                .ThenInclude(x => x.Game)
+                .Select(x => new UserGames
+                {
+                    Email = x.Email,
+                    Name = x.Name,
+                    UserId = x.Id.Value,
+                    Games = x.UserWishedGames.Select(g => g.Game).ToList()
+                }).ToListAsync();
         }
 
         // GET: api/Users/5
@@ -127,6 +163,8 @@ namespace GamifyMain.Controllers
 
             return user;
         }
+
+
 
         private bool UserExists(int id)
         {

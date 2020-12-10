@@ -1,19 +1,36 @@
-<form class="form-inline md-form form-sm">
-  <mdb-icon fas icon="search" aria-hidden="true"></mdb-icon>
-  <input
-    id="searchInput"
-    class="form-control form-control-sm ml-3 w-75"
-    type="text"
-    placeholder="Search"
-    aria-label="Search"
-    mdbInput
-  />
+<form class="form-inline md-form form-sm row">
+  <div class="col-6">
+    <mdb-icon fas icon="search" aria-hidden="true"></mdb-icon>
+    <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" mdbInput
+      [formControl]="searchCtrl" />
+  </div>
+  <div class="form-group col-6">
+    <select class="custom-select" [formControl]="selectCtrl" id="select">
+      <option *ngFor="let o of searchTypeOptions" [value]="o.value">{{o.text}}</option>
+    </select>
+  </div>
 </form>
-<div id="searchResults">
-  <div class="card" style="width: 18rem" *ngFor="let e of elements">
-    <div class="card-body">
+
+<div class="results d-flex flex-wrap">
+  <div class="card m-3" style="width: 18rem" *ngFor="let e of elements">
+    <div class="card-body" *ngIf="isFilterByUser">
+      <div class="d-flex justify-content-between">
+        <h5 class="card-title">{{ e.name }}</h5>
+        <a [routerLink]="['/shouldBeDeveloped/', e.id]" class="card-link">More</a>
+      </div>
+      <h6 class="card-subtitle mb-2 text-muted">User</h6>
+      <div class="card-text">
+        Games:
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let g of e.games">
+            {{g.name}}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-body" *ngIf="!isFilterByUser">
       <h5 class="card-title">{{ e.name }}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{ category }}</h6>
+      <h6 class="card-subtitle mb-2 text-muted">Places</h6>
       <p class="card-text">
         {{ e.description }}
       </p>

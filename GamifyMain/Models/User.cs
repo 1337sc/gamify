@@ -1,4 +1,6 @@
-﻿namespace GamifyMain.Models
+﻿using System.Collections.Generic;
+
+namespace GamifyMain.Models
 {
     public class User
     {
@@ -9,5 +11,7 @@
         public string Role { get; set; }
         public string PhoneNumber { get; set; }
         public string City { get; set; }
+
+        public List<UserWishedGame> UserWishedGames { get; set; }
     }
 }
