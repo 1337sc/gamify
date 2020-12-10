@@ -11,11 +11,11 @@ namespace GamifyMain.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CommentsForPlacessController : ControllerBase
+    public class CommentsForPlacesController : ControllerBase
     {
         private readonly ApplicationContext _context;
 
-        public CommentsForPlacessController(ApplicationContext context)
+        public CommentsForPlacesController(ApplicationContext context)
         {
             _context = context;
         }

@@ -4,6 +4,7 @@ import { Game } from './game';
 import { Genre } from './genre';
 import { Place } from './place';
 import { User } from './user';
+import { Comment } from './comment';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class DataService {
   private gamesInPlacesUrl = '/api/gamesInPlaces';
   private gamesOfGenresUrl = 'api/gamesOfGenres';
   private usersWishedGamesUrl = '/api/usersWishedGames';
+  private commentsUrl = '/api/comments';
 
   private options = {
     observe: 'response' as const,
@@ -33,7 +35,7 @@ export class DataService {
 
   getUserWishlist(id: number) {
     return this.http.get<Game[]>(`${this.usersUrl}/${id}/games`, this.options);
-  } 
+  }
 
   public getUserByEmail(email: string) {
     return this.http.get<User>(
@@ -97,6 +99,13 @@ export class DataService {
   public getPlacesInRadius(radius: number, userLat: number, userLong: number) {
     return this.http.get<Place[]>(
       `${this.placesUrl}/radius/${radius},${userLat},${userLong}`,
+      this.options
+    );
+  }
+
+  public getPlaceComments(id: number) {
+    return this.http.get<Comment[]>(
+      `${this.placesUrl}/${id}/comments`,
       this.options
     );
   }
@@ -185,5 +194,13 @@ export class DataService {
 
   createWishedGame(wishedGame: { gameId: number; userId: number }) {
     return this.http.post(this.usersWishedGamesUrl, wishedGame, this.options);
+  }
+
+  createComment(comment: Comment) {
+    return this.http.post<Comment>(this.commentsUrl, comment, this.options);
+  }
+
+  createCommentForPlace(commentId: number, placeId: number){
+    return this.http.post("api/commentsforplaces", {placeId: placeId, commentId: commentId}, this.options);
   }
 }

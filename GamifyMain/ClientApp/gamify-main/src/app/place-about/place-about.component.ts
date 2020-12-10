@@ -4,6 +4,7 @@ import { DataService } from '../data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '../game';
 import { Place } from '../place';
+import { Comment } from '../comment';
 
 @Component({
   selector: 'app-place-about',
@@ -17,6 +18,7 @@ export class PlaceAboutComponent implements OnInit {
   loaded = false;
   deleteGameFlag = true;
   curUserId: number;
+  curPlaceComments: Comment[];
 
   constructor(
     private snackBar: MatSnackBar,
@@ -32,6 +34,9 @@ export class PlaceAboutComponent implements OnInit {
       .subscribe((response) => {
         this.currentPlace = response.body;
         this.refreshGamesTable();
+        this.dataService
+          .getPlaceComments(this.currentPlace.id)
+          .subscribe((response) => (this.curPlaceComments = response.body));
       });
   }
 
