@@ -1,8 +1,13 @@
 <div *ngIf="loaded">
-    <h2>Add a new place</h2>
-    <place-form [(props)]="formProps"></place-form>
-    <div class="form-group">
-        <input type="button" value="Save" (click)="save()" class="btn btn-success" />
-        <a routerLink="/cabinet" class="btn btn-warning">Cancel</a>
-    </div>
+  <h2>Add a new place</h2>
+  <place-form [(props)]="formProps"></place-form>
+  <div class="form-group">
+    <input
+      type="button"
+      value="Save"
+      (click)="save()"
+      class="btn btn-success"
+    />
+    <a routerLink="/cabinet" class="btn btn-warning">Cancel</a>
+  </div>
 </div>

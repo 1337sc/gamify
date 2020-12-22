@@ -17,14 +17,13 @@ export class PlaceFormComponent implements OnInit {
         this.currentLat = position.coords.latitude;
         this.currentLong = position.coords.longitude;
       });
-    }
-    else{
+    } else {
       this.currentLat = this.props.place.coordLat;
       this.currentLong = this.props.place.coordLon;
     }
   }
 
-  dragEnd($event: any){
+  dragEnd($event: any) {
     this.props.place.coordLat = $event.latLng.lat();
     this.props.place.coordLon = $event.latLng.lng();
   }

@@ -16,7 +16,7 @@
     <div class="card-body" *ngIf="isFilterByUser">
       <div class="d-flex justify-content-between">
         <h5 class="card-title">{{ e.name }}</h5>
-        <a [routerLink]="['/shouldBeDeveloped/', e.id]" class="card-link">More</a>
+        
       </div>
       <h6 class="card-subtitle mb-2 text-muted">User</h6>
       <div class="card-text">
@@ -34,7 +34,11 @@
       <p class="card-text">
         {{ e.description }}
       </p>
-      <a [routerLink]="['/placeAbout/', e.id]" class="card-link">More</a>
+      <ng-container *ngIf="category == 'place'">
+        <a [routerLink]="['/placeAbout/', e.id]" class="card-link"
+          >More</a
+        ></ng-container
+      >
     </div>
   </div>
 </div>

@@ -2,9 +2,12 @@
   <h2 style="text-align: center">{{ currentPlace.name }}</h2>
   <p style="white-space: pre-wrap">{{ currentPlace.description }}</p>
   <h2 style="text-align: center">Games served here:</h2>
+
   <div *ngIf="curUserId == currentPlace.ownerId">
     <a [routerLink]="'/createGame/' + currentPlace.id" class="nav-link">Add</a>
+    <a [routerLink]="'/createAd/' + currentPlace.id" class="nav-link">New advertisement</a>
   </div>
+  
   <table class="table table-striped">
     <tbody>
       <ng-container *ngFor="let g of offeredGames">
