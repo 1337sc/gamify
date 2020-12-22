@@ -30,6 +30,7 @@ import { WishedGameCreateComponent } from './wished-game-create/wished-game-crea
 import { WishedGameEditComponent } from './wished-game-edit/wished-game-edit.component';
 import { CommentComponent } from './comment/comment.component';
 import { CommentAddComponent } from './comment-add/comment-add.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 const appRoutes: Routes = [
   { path: 'cabinet', component: CabinetComponent },
@@ -42,6 +43,7 @@ const appRoutes: Routes = [
   { path: 'search', component: SearchComponent },
   { path: 'placeAbout/:id', component: PlaceAboutComponent },
   { path: 'addComment/:id', component: CommentAddComponent },
+  { path: 'admin', component: AdminPanelComponent },
   { path: '', component: HomeComponent },
   { path: '**', redirectTo: '/' },
 ];
@@ -65,6 +67,7 @@ const appRoutes: Routes = [
     WishedGameEditComponent,
     CommentComponent,
     CommentAddComponent,
+    AdminPanelComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
