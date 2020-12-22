@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
+import { DataService, UserContact } from '../data.service';
 import { fromEvent } from 'rxjs';
 import {
   debounceTime,
@@ -11,6 +11,8 @@ import {
 import { Place } from '../place';
 import { FormControl } from '@angular/forms';
 import { User } from '../user';
+import { UserGames } from '../models/UserGames';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-search',
@@ -19,7 +21,7 @@ import { User } from '../user';
 })
 export class SearchComponent implements OnInit {
   category = 'place';
-  elements: Place[] | User[];
+  elements: Place[] | UserGames[];
 
   searchCtrl: FormControl = new FormControl('');
   selectCtrl: FormControl = new FormControl(SearchType.Places);
@@ -28,7 +30,9 @@ export class SearchComponent implements OnInit {
 
   currentUser: User;
 
-  constructor(private dataService: DataService) {
+  userContacts: UserContact[] = [];
+
+  constructor(private dataService: DataService, private snackBar: MatSnackBar) {
     if (localStorage.getItem('curUser')) {
       this.searchTypeOptions.push({ text: 'User', value: SearchType.User });
       this.selectCtrl.setValue(SearchType.User);
@@ -59,11 +63,18 @@ export class SearchComponent implements OnInit {
   reloadData() {
     const value = (this.searchCtrl.value as string).toLowerCase();
     this.elements = [];
+    this.dataService
+      .getContactsByUser(this.currentUser.id)
+      .subscribe((contacts) => {
+        this.userContacts = contacts;
+      });
     switch (+this.selectCtrl.value) {
       case SearchType.User:
         this.dataService
           .getUserWithGames(this.currentUser.id, value)
-          .subscribe((data) => (this.elements = data));
+          .subscribe((data) => {
+            this.elements = data;
+          });
         break;
       case SearchType.Places:
         this.dataService
@@ -75,6 +86,19 @@ export class SearchComponent implements OnInit {
 
   clearResults(): void {
     this.searchCtrl.setValue('');
+  }
+
+  addContact(id: number) {
+    this.dataService.saveContact(this.currentUser.id, id).subscribe(() => {
+      this.snackBar.open('Contact has been successfully added.', 'Add', {
+        duration: 2500,
+      });
+      this.reloadData();
+    });
+  }
+
+  showAddBtn(id: number) {
+    return this.userContacts.findIndex((u) => u.id === id) === -1;
   }
 }
 

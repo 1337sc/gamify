@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GamifyMain.Models;
 
 namespace GamifyMain.Models
 {
@@ -21,7 +16,26 @@ namespace GamifyMain.Models
         public DbSet<Advertisement> Advertisements { get; set; }
         public DbSet<UserPlaceSubscription> UserPlaceSubscriptions { get; set; }
 
+        public DbSet<Contact> Contacts { get; set; }
+
         public ApplicationContext() : base() { }
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Contact>()
+                .HasOne(x => x.FirstUser)
+                .WithMany(x => x.Contacts)
+                .HasForeignKey(x => x.FirstUserId)
+                .HasPrincipalKey(x => x.Id);
+
+            modelBuilder.Entity<Contact>()
+                .HasOne(x => x.SecondUser)
+                .WithMany()
+                .HasForeignKey(x => x.SecondUserId).OnDelete(DeleteBehavior.NoAction)
+                .HasPrincipalKey(x => x.Id);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

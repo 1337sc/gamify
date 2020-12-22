@@ -247,4 +247,23 @@ export class DataService {
       this.options
     );
   }
+  getContactsByUser(userId: number) {
+    return this.http.get<UserContact[]>(`api/contact/user/${userId}`);
+  }
+
+  saveContact(firstUserId: number, secondUserId: number) {
+    return this.http.post(
+      `api/contact/${firstUserId}/with/${secondUserId}`,
+      {}
+    );
+  }
+
+  deleteContact(firstUserId: number, secondUserId: number) {
+    return this.http.delete(`api/contact/${firstUserId}/with/${secondUserId}`);
+  }
+}
+
+export interface UserContact {
+  name: string;
+  id: number;
 }
