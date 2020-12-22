@@ -18,6 +18,8 @@ namespace GamifyMain.Models
         public DbSet<UserWishedGame> UsersWishedGames { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<CommentForPlace> CommentsForPlaces { get; set; }
+        public DbSet<Advertisement> Advertisements { get; set; }
+        public DbSet<UserPlaceSubscription> UserPlaceSubscriptions { get; set; }
 
         public ApplicationContext() : base() { }
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }

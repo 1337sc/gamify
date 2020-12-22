@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '../game';
 import { Place } from '../place';
 import { Comment } from '../comment';
+import { Advertisement } from '../advertisement';
 
 @Component({
   selector: 'app-place-about',
@@ -14,6 +15,7 @@ import { Comment } from '../comment';
 export class PlaceAboutComponent implements OnInit {
   currentPlace: Place;
   offeredGames: Game[];
+  currentAds: Advertisement[];
   maskedGameId = -1;
   loaded = false;
   deleteGameFlag = true;
@@ -29,6 +31,11 @@ export class PlaceAboutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataService
+      .getPlaceAdvertisements(this.activeRoute.snapshot.params['id'])
+      .subscribe((response) => {
+        this.currentAds = response.body;
+      });
     this.dataService
       .getPlace(this.activeRoute.snapshot.params['id'])
       .subscribe((response) => {

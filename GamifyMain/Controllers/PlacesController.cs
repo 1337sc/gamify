@@ -96,6 +96,12 @@ namespace GamifyMain.Controllers
                           select c).ToListAsync();
         }
 
+        [HttpGet("{id}/advertisements")]
+        public async Task<object> GetPlaceAdvertisements(int id)
+        {
+            return await (from ad in _context.Advertisements where ad.PlaceId == id select ad).ToListAsync();
+        }
+
         // PUT: api/Places/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

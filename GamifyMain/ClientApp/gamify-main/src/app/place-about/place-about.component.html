@@ -4,10 +4,18 @@
   <h2 style="text-align: center">Games served here:</h2>
 
   <div *ngIf="curUserId == currentPlace.ownerId">
-    <a [routerLink]="'/createGame/' + currentPlace.id" class="nav-link">Add</a>
-    <a [routerLink]="'/createAd/' + currentPlace.id" class="nav-link">New advertisement</a>
+    <a [routerLink]="'/createGame/' + currentPlace.id" class="nav-link"
+      >Add game</a
+    >
+    <a [routerLink]="'/createAd/' + currentPlace.id" class="nav-link"
+      >New advertisement</a
+    >
   </div>
-  
+  <div class="d-flex d-flex-wrap">
+    <div class="card m-3" style="width: 18rem" *ngFor="let ad of currentAds">
+      <div class="card-body">{{ ad.text }}</div>
+    </div>
+  </div>
   <table class="table table-striped">
     <tbody>
       <ng-container *ngFor="let g of offeredGames">

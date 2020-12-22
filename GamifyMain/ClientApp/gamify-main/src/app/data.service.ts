@@ -7,6 +7,7 @@ import { UserGames } from './models/UserGames';
 import { Place } from './place';
 import { User } from './user';
 import { Comment } from './comment';
+import { Advertisement } from './advertisement';
 
 @Injectable({
   providedIn: 'root',
@@ -118,6 +119,13 @@ export class DataService {
   public getPlaceComments(id: number) {
     return this.http.get<Comment[]>(
       `${this.placesUrl}/${id}/comments`,
+      this.options
+    );
+  }
+
+  public getPlaceAdvertisements(id: number) {
+    return this.http.get<Advertisement[]>(
+      `${this.placesUrl}/${id}/advertisements`,
       this.options
     );
   }
