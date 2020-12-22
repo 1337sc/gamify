@@ -16,7 +16,9 @@
     <div class="card-body" *ngIf="isFilterByUser">
       <div class="d-flex justify-content-between">
         <h5 class="card-title">{{ e.name }}</h5>
-        <a [routerLink]="['/shouldBeDeveloped/', e.id]" class="card-link">More</a>
+        <button (click)="addContact(e.userId)" class="btn btn-sm btn-primary" *ngIf="showAddBtn(e.userId)">
+          Add to contacts
+        </button>
       </div>
       <h6 class="card-subtitle mb-2 text-muted">User</h6>
       <div class="card-text">

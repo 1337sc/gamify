@@ -13,5 +13,7 @@ namespace GamifyMain.Models
         public string City { get; set; }
 
         public List<UserWishedGame> UserWishedGames { get; set; }
+
+        public List<Contact> Contacts { get; set; }
     }
 }

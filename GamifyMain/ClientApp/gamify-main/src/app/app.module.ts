@@ -31,6 +31,9 @@ import { WishedGameEditComponent } from './wished-game-edit/wished-game-edit.com
 import { CommentComponent } from './comment/comment.component';
 import { CommentAddComponent } from './comment-add/comment-add.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 const appRoutes: Routes = [
   { path: 'cabinet', component: CabinetComponent },
@@ -68,6 +71,7 @@ const appRoutes: Routes = [
     CommentComponent,
     CommentAddComponent,
     AdminPanelComponent,
+    DeleteDialogComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -76,6 +80,8 @@ const appRoutes: Routes = [
     MatChipsModule,
     MatFormFieldModule,
     MatIconModule,
+    MatDialogModule,
+    MatButtonModule,
 
     BrowserModule,
     FormsModule,
