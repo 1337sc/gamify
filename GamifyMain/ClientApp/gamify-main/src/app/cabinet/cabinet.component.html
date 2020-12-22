@@ -1,7 +1,9 @@
 <div *ngIf="loaded">
   <p>Hello, {{ currentUser.name }}</p>
   <ng-container *ngIf="currentUser.role == 'placeOwner'">
-    <div style="text-align: center"><h2>Your places</h2></div>
+    <div style="text-align: center">
+      <h2>Your places</h2>
+    </div>
     <div>
       <a [routerLink]="'/create/' + currentUser.id" class="nav-link">Add</a>
     </div>
@@ -18,9 +20,7 @@
             <tr>
               <td>{{ p?.name }}</td>
               <td>
-                <a [routerLink]="['/edit', p.id]" class="btn btn-sm btn-primary"
-                  >Edit</a
-                >
+                <a [routerLink]="['/edit', p.id]" class="btn btn-sm btn-primary">Edit</a>
                 <button (click)="delete(p.id)" class="btn btn-sm btn-danger">
                   Delete
                 </button>
@@ -32,11 +32,11 @@
     </table>
   </ng-container>
   <ng-container *ngIf="currentUser.role == 'user'">
-    <div style="text-align: center"><h2>Your wishlist</h2></div>
+    <div style="text-align: center">
+      <h2>Your wishlist</h2>
+    </div>
     <div>
-      <a [routerLink]="'/createWishedGame/' + currentUser.id" class="nav-link"
-        >Add</a
-      >
+      <a [routerLink]="'/createWishedGame/' + currentUser.id" class="nav-link">Add</a>
     </div>
     <table class="table table-striped">
       <thead>
@@ -51,15 +51,36 @@
             <tr>
               <td>{{ g?.name }}</td>
               <td>
-                <a [routerLink]="['/editWishedGame', g.id]" class="btn btn-sm btn-primary"
-                  >Edit</a
-                >
+                <a [routerLink]="['/editWishedGame', g.id]" class="btn btn-sm btn-primary">Edit</a>
                 <button (click)="deleteWishedGame(g.id)" class="btn btn-sm btn-danger">
                   Delete
                 </button>
               </td>
             </tr>
           </ng-container>
+        </ng-container>
+      </tbody>
+    </table>
+    <div class="text-center m-4" *ngIf="currentUserContats.length">
+      <h2>Your contacts</h2>
+    </div>
+    <table class="table table-striped" *ngIf="currentUserContats.length">
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let c of currentUserContats">
+          <tr>
+            <td>{{ c.name }}</td>
+            <td>
+              <button (click)="deleteContact(c.id)" class="btn btn-sm btn-danger">
+                Delete
+              </button>
+            </td>
+          </tr>
         </ng-container>
       </tbody>
     </table>
