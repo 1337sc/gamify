@@ -6,6 +6,7 @@ import { Game } from '../game';
 import { Place } from '../place';
 import { Comment } from '../comment';
 import { Advertisement } from '../advertisement';
+import { UserPlaceSubscription } from '../user-place-subscription';
 
 @Component({
   selector: 'app-place-about',
@@ -74,5 +75,13 @@ export class PlaceAboutComponent implements OnInit {
         this.offeredGames = response.body;
         this.loaded = true;
       });
+  }
+
+  subscribe() {
+    this.dataService
+      .createUserPlaceSubscription(
+        new UserPlaceSubscription(0, this.curUserId, this.currentPlace.id)
+      )
+      .subscribe();
   }
 }

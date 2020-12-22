@@ -32,6 +32,23 @@
     </table>
   </ng-container>
   <ng-container *ngIf="currentUser.role == 'user'">
+    <div style="text-align: center"><h2>Your subscriptions</h2></div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td>Offers</td>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let p of currentSubscriptions">
+          <tr>
+            <td>{{ p?.name }}</td>
+            <td>{{ currentSubscriptions.length }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
     <div style="text-align: center"><h2>Your wishlist</h2></div>
     <div>
       <a [routerLink]="'/createWishedGame/' + currentUser.id" class="nav-link"
@@ -51,10 +68,15 @@
             <tr>
               <td>{{ g?.name }}</td>
               <td>
-                <a [routerLink]="['/editWishedGame', g.id]" class="btn btn-sm btn-primary"
+                <a
+                  [routerLink]="['/editWishedGame', g.id]"
+                  class="btn btn-sm btn-primary"
                   >Edit</a
                 >
-                <button (click)="deleteWishedGame(g.id)" class="btn btn-sm btn-danger">
+                <button
+                  (click)="deleteWishedGame(g.id)"
+                  class="btn btn-sm btn-danger"
+                >
                   Delete
                 </button>
               </td>

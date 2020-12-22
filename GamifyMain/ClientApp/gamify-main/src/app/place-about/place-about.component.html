@@ -1,5 +1,6 @@
 <div *ngIf="loaded">
   <h2 style="text-align: center">{{ currentPlace.name }}</h2>
+  <input type="button" value="Subscribe" (click)="subscribe()" class="btn btn-success" />
   <p style="white-space: pre-wrap">{{ currentPlace.description }}</p>
   <h2 style="text-align: center">Games served here:</h2>
 

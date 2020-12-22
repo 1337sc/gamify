@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class CabinetComponent implements OnInit {
   currentUser: User;
+  currentSubscriptions: Place[];
   currentPlaces: Place[];
   currentWishList: Game[];
   loaded = false;
@@ -32,6 +33,11 @@ export class CabinetComponent implements OnInit {
       .subscribe((response) => {
         this.currentUser = response.body;
         this.refreshTable();
+      });
+    this.dataService
+      .getUserSubscriptions(Number.parseInt(localStorage.getItem('curUser')))
+      .subscribe((response) => {
+        this.currentSubscriptions = response.body;
       });
   }
 
@@ -53,7 +59,7 @@ export class CabinetComponent implements OnInit {
     });
   }
 
-  deleteWishedGame(gameId: number){
+  deleteWishedGame(gameId: number) {
     this.maskedGameId = gameId;
     let snackBarRef = this.snackBar.open('The game has been deleted', 'Undo', {
       duration: 2500,

@@ -8,6 +8,7 @@ import { Place } from './place';
 import { User } from './user';
 import { Comment } from './comment';
 import { Advertisement } from './advertisement';
+import { UserPlaceSubscription } from './user-place-subscription';
 
 @Injectable({
   providedIn: 'root',
@@ -48,6 +49,13 @@ export class DataService {
 
   getUserWishlist(id: number) {
     return this.http.get<Game[]>(`${this.usersUrl}/${id}/games`, this.options);
+  }
+
+  getUserSubscriptions(id: number) {
+    return this.http.get<Place[]>(
+      `${this.usersUrl}/${id}/subscriptions`,
+      this.options
+    );
   }
 
   public getUserByEmail(email: string) {
@@ -220,7 +228,23 @@ export class DataService {
     return this.http.post<Comment>(this.commentsUrl, comment, this.options);
   }
 
-  createCommentForPlace(commentId: number, placeId: number){
-    return this.http.post("api/commentsforplaces", {placeId: placeId, commentId: commentId}, this.options);
+  createCommentForPlace(commentId: number, placeId: number) {
+    return this.http.post(
+      'api/commentsforplaces',
+      { placeId: placeId, commentId: commentId },
+      this.options
+    );
+  }
+
+  createAdvertisement(ad: Advertisement) {
+    return this.http.post('api/advertisements', ad, this.options);
+  }
+
+  createUserPlaceSubscription(userPlaceSub: UserPlaceSubscription) {
+    return this.http.post(
+      'api/userplacesubscriptions',
+      userPlaceSub,
+      this.options
+    );
   }
 }

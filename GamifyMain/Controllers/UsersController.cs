@@ -99,9 +99,18 @@ namespace GamifyMain.Controllers
         public async Task<object> GetUserWishlist(int id)
         {
             return await (from g in _context.Games
-                          join uwg in _context.UsersWishedGames on g.Id equals uwg.GameId 
-                          where uwg.UserId == id 
+                          join uwg in _context.UsersWishedGames on g.Id equals uwg.GameId
+                          where uwg.UserId == id
                           select g).ToListAsync();
+        }
+
+        [HttpGet("{id}/subscriptions")]
+        public async Task<object> GetUserSubscriptions(int id)
+        {
+            return await (from p in _context.Places
+                          join ups in _context.UserPlaceSubscriptions on p.Id equals ups.PlaceId
+                          where ups.UserId == id
+                          select p).ToListAsync();
         }
 
         // PUT: api/Users/5
