@@ -1,0 +1,49 @@
+<div *ngIf="loaded">
+  <div style="text-align: center"><h2>All places</h2></div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let p of allPlaces">
+        <ng-container *ngIf="p.id != maskedPlaceId">
+          <tr>
+            <td>{{ p?.name }}</td>
+            <td>
+              <a [routerLink]="['/edit', p.id]" class="btn btn-sm btn-primary"
+                >Edit</a
+              >
+              <button (click)="deletePlace(p.id)" class="btn btn-sm btn-danger">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+    </tbody>
+  </table>
+  <div style="text-align: center"><h2>All users</h2></div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let u of allUsers">
+          <tr>
+            <td>{{ u?.name }}</td>
+            <td>
+              <button (click)="deleteUser(u.id)" class="btn btn-sm btn-danger">
+                Delete
+              </button>
+            </td>
+          </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
